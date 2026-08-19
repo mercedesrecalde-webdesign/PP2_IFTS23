@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="es-AR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cronograma · Práctica Profesionalizante II</title>
+<style>
+/* ═══════════════════════════════════════════════════════════════
+   PALETA — alineada a los documentos de cátedra PP2
+   ═══════════════════════════════════════════════════════════════ */
+:root{
+  --tinta:#1f3a3d;
+  --teal:#2a7d78;
+  --teal-claro:#e6f0ef;
+  --coral:#e07a5f;
+  --coral-claro:#fbeae4;
+  --papel:#ffffff;
+  --crema:#f7f5f1;
+  --ciruela:#8a5a7a;
+  --ciruela-claro:#f2e9ef;
+  --linea:#e3ddd3;
+  --gris:#6b7b7a;
+  --sombra:rgba(31,58,61,.10);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{
+  font-family:'Calibri','Segoe UI',-apple-system,'Helvetica Neue',Arial,sans-serif;
+  background:var(--papel);color:var(--tinta);line-height:1.55;
+  -webkit-font-smoothing:antialiased;padding:0 0 64px;
+}
+header{padding:46px 24px 30px;max-width:1080px;margin:0 auto;text-align:center}
+.marca{font-size:.72rem;letter-spacing:.22em;text-transform:uppercase;color:var(--teal);font-weight:700;margin-bottom:16px}
+.eyebrow{display:inline-block;font-size:.7rem;letter-spacing:.28em;text-transform:uppercase;color:var(--coral);font-weight:700;margin-bottom:14px}
+h1{font-family:'Cambria','Georgia',serif;font-size:clamp(2.4rem,6vw,3.7rem);font-weight:700;letter-spacing:-.01em;line-height:1;margin-bottom:12px;color:var(--tinta)}
+.sub{font-size:1.05rem;color:var(--teal);font-weight:600}
+.sub em{color:var(--gris);font-weight:400;font-style:italic}
+.meta-linea{margin-top:18px;font-size:.8rem;letter-spacing:.04em;color:var(--gris);display:flex;gap:8px 22px;justify-content:center;flex-wrap:wrap}
+.meta-linea b{color:var(--teal);font-weight:600}
+.leyenda{max-width:1080px;margin:26px auto 0;padding:0 24px;display:flex;gap:20px;justify-content:center;flex-wrap:wrap;font-size:.76rem;letter-spacing:.02em}
+.leyenda span{display:inline-flex;align-items:center;gap:7px;color:var(--gris);font-weight:600}
+.punto{width:11px;height:11px;border-radius:50%;display:inline-block}
+.timeline{max-width:1080px;margin:34px auto 0;padding:0 24px;position:relative}
+.riel{position:absolute;left:calc(24px + 15px);top:10px;bottom:10px;width:2px;background:var(--linea)}
+@media(min-width:760px){.riel{left:50%;transform:translateX(-1px)}}
+.clase{position:relative;padding-left:52px;margin-bottom:18px}
+@media(min-width:760px){
+  .clase{width:50%;padding-left:0}
+  .clase.izq{padding-right:46px;text-align:right;margin-left:0}
+  .clase.der{padding-left:46px;margin-left:50%}
+}
+.nodo{position:absolute;top:22px;left:9px;width:16px;height:16px;border-radius:50%;background:var(--papel);border:3px solid var(--teal);z-index:2}
+.tipo-salida .nodo{border-color:var(--coral)}
+.tipo-parcial .nodo{border-color:var(--ciruela)}
+@media(min-width:760px){
+  .clase.izq .nodo{left:auto;right:-8px}
+  .clase.der .nodo{left:-8px}
+}
+.tarjeta{background:var(--crema);border:1px solid var(--linea);border-radius:8px;box-shadow:0 1px 2px var(--sombra);overflow:hidden;transition:box-shadow .2s ease,transform .2s ease}
+.tipo-salida .tarjeta{background:var(--coral-claro);border-color:#f0d5c9}
+.tipo-parcial .tarjeta{background:var(--ciruela-claro);border-color:#e6d3e0}
+.tarjeta:hover{box-shadow:0 8px 24px var(--sombra);transform:translateY(-1px)}
+.cab{width:100%;border:0;background:transparent;cursor:pointer;text-align:inherit;padding:16px 18px;display:flex;gap:14px;align-items:flex-start;font-family:inherit;color:inherit}
+.clase.izq .cab{flex-direction:row-reverse}
+.num{font-size:.82rem;font-weight:700;color:#fff;background:var(--teal);width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;line-height:1}
+.tipo-salida .num{background:var(--coral)}
+.tipo-parcial .num{background:var(--ciruela)}
+.cab-txt{flex:1;min-width:0}
+.fecha{font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;color:var(--teal);font-weight:700;margin-bottom:3px}
+.tipo-salida .fecha{color:var(--coral)}
+.tipo-parcial .fecha{color:var(--ciruela)}
+.titulo{font-family:'Cambria','Georgia',serif;font-size:1.14rem;font-weight:700;letter-spacing:-.01em;line-height:1.22}
+.etiqueta{display:inline-block;margin-top:7px;font-size:.64rem;letter-spacing:.1em;text-transform:uppercase;font-weight:700;padding:3px 9px;border-radius:99px;color:var(--teal);background:var(--teal-claro)}
+.tipo-salida .etiqueta{color:var(--coral);background:#f7ddd2}
+.tipo-parcial .etiqueta{color:var(--ciruela);background:#ecdae6}
+.chevron{margin-top:6px;transition:transform .25s ease;flex-shrink:0;color:var(--gris)}
+.tarjeta.abierta .chevron{transform:rotate(180deg)}
+.cuerpo{max-height:0;overflow:hidden;transition:max-height .35s ease}
+.cuerpo-inner{padding:16px 18px 18px;text-align:left;border-top:1px solid var(--linea)}
+.clase.izq .cuerpo-inner{text-align:left}
+.bloque-h{font-size:.66rem;letter-spacing:.15em;text-transform:uppercase;font-weight:700;color:var(--gris);margin:16px 0 8px}
+.bloque-h:first-child{margin-top:0}
+.temas{list-style:none}
+.temas li{position:relative;padding-left:20px;margin-bottom:6px;font-size:.95rem;line-height:1.5}
+.temas li::before{content:"";position:absolute;left:0;top:.55em;width:7px;height:7px;background:var(--teal);border-radius:50%}
+.tipo-salida .temas li::before{background:var(--coral)}
+.tipo-parcial .temas li::before{background:var(--ciruela)}
+.salida-grid{display:grid;gap:14px}
+.foto{width:100%;border-radius:6px;border:1px solid var(--linea);display:block;aspect-ratio:16/9;object-fit:cover;background:var(--teal-claro)}
+.datos-salida{display:flex;flex-direction:column;gap:9px;font-size:.93rem}
+.dato{display:flex;gap:9px;align-items:flex-start}
+.dato .ic{flex-shrink:0;margin-top:2px;color:var(--coral)}
+.dato b{font-size:.66rem;letter-spacing:.08em;text-transform:uppercase;color:var(--gris);display:block;font-weight:700;margin-bottom:1px}
+.acciones{display:flex;flex-wrap:wrap;gap:9px;margin-top:16px}
+.btn{font-size:.82rem;font-weight:700;letter-spacing:.01em;text-decoration:none;padding:9px 16px;border-radius:6px;display:inline-flex;align-items:center;gap:7px;transition:opacity .15s,transform .1s}
+.btn:hover{opacity:.9}
+.btn:active{transform:scale(.98)}
+.btn-full{background:var(--teal);color:#fff}
+.tipo-salida .btn-full{background:var(--coral)}
+.tipo-parcial .btn-full{background:var(--ciruela)}
+.btn-line{background:transparent;color:var(--tinta);border:1.5px solid var(--linea)}
+.btn-off{background:transparent;color:var(--gris);border:1.5px dashed var(--linea);cursor:default;opacity:.7}
+footer{max-width:1080px;margin:50px auto 0;padding:0 24px;text-align:center;font-size:.74rem;letter-spacing:.03em;color:var(--gris)}
+footer b{color:var(--teal)}
+@media(prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="marca">IFTS N.º 23 · Técnico Superior en Gastronomía</div>
+  <div class="eyebrow">Producción Gastronómica · 2.º cuatrimestre 2026</div>
+  <h1>Cronograma</h1>
+  <div class="sub">Práctica Profesionalizante II <em>· de la receta a la gestión de la producción</em></div>
+  <div class="meta-linea">
+    <span>Jueves · <b>8:00 a 11:20 h</b></span>
+    <span><b>16</b> clases</span>
+    <span>Materia promocionable</span>
+  </div>
+</header>
+
+<div class="leyenda">
+  <span><i class="punto" style="background:var(--teal)"></i>Clase teórica / práctica</span>
+  <span><i class="punto" style="background:var(--coral)"></i>Salida</span>
+  <span><i class="punto" style="background:var(--ciruela)"></i>Parcial / Integradora</span>
+</div>
+
+<div class="timeline">
+  <div class="riel"></div>
+  <div id="lista"></div>
+</div>
+
+<footer>
+  Cronograma sujeto a modificaciones · <b>Práctica Profesionalizante II</b> · Prof. Téc. Sup. Mercedes Recalde · 2026
+</footer>
+
+<script>
+/* ═══════════════════════════════════════════════════════════════════════
+   ▼▼▼  ZONA EDITABLE  ▼▼▼
+   Editá SOLO este bloque y volvé a subir a GitHub. Cloudflare redeploya solo.
+
+   Campos de cada clase:
+     fecha    : lo que se muestra arriba del título (ej "24 SEP"). Podés dejar "" .
+     titulo   : nombre de la clase
+     tipo     : "clase" | "salida" | "parcial"   -> define el color
+     etiqueta : texto chico opcional (ej "Parcial 1"). "" si no querés.
+     temas    : lista -> ["tema 1", "tema 2"]
+     actividad: { texto:"...", url:"..." }  link a planilla/consigna. url:"" = botón gris "próximamente".
+
+   SOLO SALIDAS, además:
+     lugar, direccion, hora   (textos)
+     foto : URL de imagen (o "")
+     mapa : link de Google Maps ("Cómo llegar")   ("" = sin botón)
+   ▼▼▼ */
+
+const CLASES = [
+  {
+    fecha:"CLASE 1", titulo:"Plan de negocios y organizaciones", tipo:"clase", etiqueta:"Teórica · Unidad I",
+    temas:[
+      "¿Qué es un plan de negocios? Organizaciones. Comercialización",
+      "Presentación de la materia y del proyecto integrador del cuatrimestre"
+    ],
+    actividad:{ texto:"Apunte Unidad I", url:"" }
+  },
+  {
+    fecha:"CLASE 2", titulo:"Organizaciones gastronómicas", tipo:"clase", etiqueta:"Teórica",
+    temas:[
+      "Tipos de operaciones de alimentos y bebidas",
+      "Modelo abierto y cerrado. Análisis de los mercados"
+    ],
+    actividad:{ texto:"Rúbrica Unidad I", url:"" }
+  },
+  {
+    fecha:"CLASE 3", titulo:"Producción sin gluten como gestión", tipo:"clase", etiqueta:"Teórica",
+    temas:[
+      "Planificación de un menú apto: contaminación cruzada y procedimientos operativos",
+      "Estandarización mediante fichas técnicas de línea sin gluten",
+      "Reglamentación aplicable y criterios de rotulación"
+    ]
+  },
+  {
+    fecha:"CLASE 4", titulo:"Práctica: rótulos y ficha apta", tipo:"clase", etiqueta:"Práctica de aula",
+    temas:[
+      "Lectura e interpretación de rótulos para la compra de insumos",
+      "Armado de la ficha técnica de una preparación apta y comienzo de su costeo"
+    ],
+    actividad:{ texto:"Planilla de ficha técnica", url:"" }
+  },
+  {
+    fecha:"CLASE 5", titulo:"Fichas técnicas", tipo:"clase", etiqueta:"Teórica · Práctica",
+    temas:[
+      "Concepto de ficha técnica y su función en los establecimientos",
+      "Toman recetas del taller de Cocina de Producción, arman sus fichas y calculan costos",
+      "Articulación entre espacios"
+    ],
+    actividad:{ texto:"Planilla de costeo", url:"" }
+  },
+  {
+    fecha:"24 SEP", titulo:"Salida 1 · Luxemburger", tipo:"salida", etiqueta:"Salida",
+    temas:[
+      "Salida a restaurante en CABA",
+      "Observación y relevamiento de la operación"
+    ],
+    lugar:"Luxemburger",
+    direccion:"Avda. Pueyrredón 1550, CABA",
+    hora:"A confirmar",
+    foto:"",
+    mapa:"https://www.google.com/maps/search/?api=1&query=Luxemburger+Avenida+Pueyrred%C3%B3n+1550+CABA",
+    actividad:{ texto:"Planilla de relevamiento", url:"" }
+  },
+  {
+    fecha:"CLASE 7", titulo:"Parcial 1", tipo:"parcial", etiqueta:"Parcial · escrito",
+    temas:[
+      "Elaboración escrita de los contenidos vistos hasta el momento"
+    ]
+  },
+  {
+    fecha:"CLASE 8", titulo:"Inventarios", tipo:"clase", etiqueta:"Teórica",
+    temas:[
+      "Inventarios. Control de stock"
+    ]
+  },
+  {
+    fecha:"CLASE 9", titulo:"Rendimientos y mermas", tipo:"clase", etiqueta:"Teórica",
+    temas:[
+      "Rendimientos, mermas y pedidos"
+    ]
+  },
+  {
+    fecha:"CLASE 10", titulo:"Análisis de las salidas", tipo:"clase", etiqueta:"Teórica",
+    temas:[
+      "Análisis y conclusiones de las diferentes salidas previstas durante la cursada",
+      "Exposición de trabajos grupales de las distintas salidas y visitas"
+    ],
+    actividad:{ texto:"Consigna de exposición", url:"" }
+  },
+  {
+    fecha:"CLASE 11", titulo:"Costeo y herramientas digitales", tipo:"clase", etiqueta:"Práctica de aula",
+    temas:[
+      "Costeo de las recetas del taller de Cocina de Producción a partir de sus fichas (articulación)",
+      "Fichas técnicas físicas y digitales. Utilización de herramientas digitales"
+    ],
+    actividad:{ texto:"Planilla de costeo", url:"" }
+  },
+  {
+    fecha:"CLASE 12", titulo:"Servicio y planificación", tipo:"clase", etiqueta:"Teórica",
+    temas:[
+      "Servicio. Planificación y producción",
+      "Uso de herramientas digitales de gestión"
+    ]
+  },
+  {
+    fecha:"08 OCT", titulo:"Salida 2 · El Greco", tipo:"salida", etiqueta:"Salida · articula PP3",
+    temas:[
+      "Salida a establecimiento gastronómico",
+      "Articulación con Práctica Profesionalizante III"
+    ],
+    lugar:"El Greco",
+    direccion:"Dirección a confirmar",
+    hora:"A confirmar",
+    foto:"",
+    mapa:"",
+    actividad:{ texto:"Planilla de diagnóstico", url:"" }
+  },
+  {
+    fecha:"CLASE 14", titulo:"Parcial 2 · Coloquio", tipo:"parcial", etiqueta:"Parcial · coloquio",
+    temas:[
+      "Coloquio grupal de los contenidos vistos hasta el momento",
+      "Cierre general de la materia con presentación y análisis de casos"
+    ]
+  },
+  {
+    fecha:"CLASE 15", titulo:"Integradora · Planificación", tipo:"parcial", etiqueta:"Integradora",
+    temas:[
+      "Planificación de la producción para la fiesta de fin de año",
+      "Armado de fichas técnicas a mayor escala y cálculo de rendimientos"
+    ],
+    actividad:{ texto:"Consigna integradora", url:"" }
+  },
+  {
+    fecha:"CLASE 16", titulo:"Integradora · Costeo y defensa", tipo:"parcial", etiqueta:"Integradora · defensa",
+    temas:[
+      "Costeo de la producción del evento y organización de brigadas (organigrama y tareas)",
+      "Defensa del trabajo integrador — Evento de Colación 2026"
+    ]
+  }
+];
+
+/* ▲▲▲  FIN ZONA EDITABLE  ▲▲▲
+   ═══════════════════════════════════════════════════════════════════════ */
+
+const svgChevron = '<svg class="chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M6 9l6 6 6-6"/></svg>';
+const icPin  = '<svg class="ic" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>';
+const icHora = '<svg class="ic" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>';
+const icLink = '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M10 13a5 5 0 007 0l3-3a5 5 0 00-7-7l-1 1"/><path d="M14 11a5 5 0 00-7 0l-3 3a5 5 0 007 7l1-1"/></svg>';
+const icMapa = '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M9 3L3 6v15l6-3 6 3 6-3V3l-6 3-6-3z"/><path d="M9 3v15M15 6v15"/></svg>';
+
+function esc(s){return String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));}
+
+const lista = document.getElementById('lista');
+
+CLASES.forEach((c,i)=>{
+  const lado = i%2===0 ? 'izq' : 'der';
+  const tipoClase = 'tipo-'+c.tipo;
+  const temasHTML = (c.temas||[]).map(t=>`<li>${esc(t)}</li>`).join('');
+
+  let cuerpo = `<div class="bloque-h">Temas</div><ul class="temas">${temasHTML}</ul>`;
+
+  if(c.tipo==='salida'){
+    let datos = '';
+    if(c.lugar)     datos += `<div class="dato">${icPin}<div><b>Lugar</b>${esc(c.lugar)}</div></div>`;
+    if(c.direccion) datos += `<div class="dato">${icPin}<div><b>Dirección</b>${esc(c.direccion)}</div></div>`;
+    if(c.hora)      datos += `<div class="dato">${icHora}<div><b>Encuentro</b>${esc(c.hora)}</div></div>`;
+    const foto = c.foto ? `<img class="foto" src="${esc(c.foto)}" alt="${esc(c.lugar||'Lugar de la salida')}" loading="lazy">` : '';
+    cuerpo += `<div class="bloque-h">La salida</div><div class="salida-grid">${foto}<div class="datos-salida">${datos}</div></div>`;
+  }
+
+  const acc = [];
+  if(c.mapa) acc.push(`<a class="btn btn-full" href="${esc(c.mapa)}" target="_blank" rel="noopener">${icMapa}Cómo llegar</a>`);
+  if(c.actividad && c.actividad.url) acc.push(`<a class="btn ${c.tipo==='salida'?'btn-line':'btn-full'}" href="${esc(c.actividad.url)}" target="_blank" rel="noopener">${icLink}${esc(c.actividad.texto||'Actividad')}</a>`);
+  else if(c.actividad && c.actividad.texto) acc.push(`<span class="btn btn-off">${icLink}${esc(c.actividad.texto)} · próximamente</span>`);
+  if(acc.length) cuerpo += `<div class="acciones">${acc.join('')}</div>`;
+
+  const etiquetaHTML = c.etiqueta ? `<span class="etiqueta">${esc(c.etiqueta)}</span>` : '';
+
+  const el = document.createElement('div');
+  el.className = `clase ${lado} ${tipoClase}`;
+  el.innerHTML = `
+    <span class="nodo"></span>
+    <div class="tarjeta">
+      <button class="cab" aria-expanded="false">
+        <span class="num">${i+1}</span>
+        <span class="cab-txt">
+          <span class="fecha">${esc(c.fecha)}</span>
+          <span class="titulo">${esc(c.titulo)}</span><br>
+          ${etiquetaHTML}
+        </span>
+        ${svgChevron}
+      </button>
+      <div class="cuerpo"><div class="cuerpo-inner">${cuerpo}</div></div>
+    </div>`;
+  lista.appendChild(el);
+
+  const cab = el.querySelector('.cab');
+  const tarjeta = el.querySelector('.tarjeta');
+  const cuerpoEl = el.querySelector('.cuerpo');
+  cab.addEventListener('click',()=>{
+    const abierta = tarjeta.classList.toggle('abierta');
+    cab.setAttribute('aria-expanded', abierta);
+    cuerpoEl.style.maxHeight = abierta ? cuerpoEl.scrollHeight+'px' : '0';
+  });
+});
+</script>
+</body>
+</html>
