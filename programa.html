@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="es-AR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Programa · Práctica Profesionalizante II</title>
+<style>
+:root{
+  --tinta:#1f3a3d;
+  --teal:#2a7d78;
+  --teal-claro:#e6f0ef;
+  --coral:#e07a5f;
+  --coral-claro:#fbeae4;
+  --papel:#ffffff;
+  --crema:#f7f5f1;
+  --ciruela:#8a5a7a;
+  --ciruela-claro:#f2e9ef;
+  --linea:#e3ddd3;
+  --gris:#6b7b7a;
+  --sombra:rgba(31,58,61,.10);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  font-family:'Calibri','Segoe UI',-apple-system,'Helvetica Neue',Arial,sans-serif;
+  background:var(--papel);color:var(--tinta);line-height:1.6;
+  -webkit-font-smoothing:antialiased;padding:0 0 64px;
+}
+
+/* ─── NAV STICKY ─── */
+.nav{
+  position:sticky;top:0;z-index:50;
+  background:rgba(255,255,255,.92);
+  backdrop-filter:blur(8px);
+  border-bottom:1px solid var(--linea);
+}
+.nav-inner{
+  max-width:1080px;margin:0 auto;padding:11px 24px;
+  display:flex;gap:6px;align-items:center;overflow-x:auto;
+}
+.nav-inner .marca-nav{font-family:'Cambria','Georgia',serif;font-weight:700;font-size:1.05rem;color:var(--teal);margin-right:14px;white-space:nowrap}
+.nav a{
+  font-size:.8rem;font-weight:600;color:var(--gris);text-decoration:none;
+  padding:6px 11px;border-radius:99px;white-space:nowrap;transition:.15s;
+}
+.nav a:hover{background:var(--teal-claro);color:var(--teal)}
+
+/* ─── HERO ─── */
+header{padding:52px 24px 34px;max-width:1080px;margin:0 auto;text-align:center}
+.marca{font-size:.72rem;letter-spacing:.22em;text-transform:uppercase;color:var(--teal);font-weight:700;margin-bottom:16px}
+.eyebrow{display:inline-block;font-size:.7rem;letter-spacing:.28em;text-transform:uppercase;color:var(--coral);font-weight:700;margin-bottom:14px}
+h1{font-family:'Cambria','Georgia',serif;font-size:clamp(2.4rem,6vw,3.7rem);font-weight:700;letter-spacing:-.01em;line-height:1.02;margin-bottom:12px;color:var(--tinta)}
+.sub{font-size:1.1rem;color:var(--teal);font-weight:600}
+.sub em{color:var(--gris);font-weight:400;font-style:italic}
+.meta-linea{margin-top:18px;font-size:.8rem;letter-spacing:.04em;color:var(--gris);display:flex;gap:8px 22px;justify-content:center;flex-wrap:wrap}
+.meta-linea b{color:var(--teal);font-weight:600}
+
+/* ─── LAYOUT ─── */
+.wrap{max-width:1080px;margin:0 auto;padding:0 24px}
+section{scroll-margin-top:64px;margin-top:52px}
+.sec-eyebrow{font-size:.68rem;letter-spacing:.16em;text-transform:uppercase;color:var(--coral);font-weight:700;margin-bottom:8px}
+h2{font-family:'Cambria','Georgia',serif;font-size:1.9rem;font-weight:700;letter-spacing:-.01em;color:var(--tinta);margin-bottom:6px;line-height:1.1}
+.sec-lead{color:var(--gris);font-size:1.02rem;margin-bottom:22px;max-width:70ch}
+p{margin-bottom:14px;max-width:74ch}
+h2 + p{margin-top:14px}
+
+/* ─── EJES (cards) ─── */
+.ejes{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:16px;margin-top:8px}
+.eje{
+  background:var(--crema);border:1px solid var(--linea);border-radius:10px;padding:22px 20px;
+  position:relative;transition:transform .2s,box-shadow .2s;
+}
+.eje:hover{transform:translateY(-2px);box-shadow:0 8px 24px var(--sombra)}
+.eje .n{
+  font-family:'Cambria','Georgia',serif;font-size:2.1rem;font-weight:700;color:var(--teal);
+  line-height:1;opacity:.9;
+}
+.eje.destacado{background:var(--coral-claro);border-color:#f0d5c9}
+.eje.destacado .n{color:var(--coral)}
+.eje .star{font-size:.62rem;letter-spacing:.1em;text-transform:uppercase;font-weight:700;color:var(--coral);display:block;margin-top:2px}
+.eje h3{font-family:'Cambria','Georgia',serif;font-size:1.15rem;margin:10px 0 6px;color:var(--tinta)}
+.eje p{font-size:.9rem;color:var(--gris);margin:0}
+.eje .tag{display:block;margin-top:10px;font-size:.72rem;color:var(--teal);font-weight:600}
+.eje.destacado .tag{color:var(--coral)}
+
+/* ─── CÓMO TRABAJAMOS ─── */
+.duo{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px;margin-top:8px}
+.card{background:var(--crema);border:1px solid var(--linea);border-radius:10px;padding:22px 20px}
+.card h3{font-family:'Cambria','Georgia',serif;font-size:1.15rem;color:var(--teal);margin-bottom:8px}
+.card p{font-size:.92rem;color:var(--gris);margin:0}
+
+/* ─── KPIs ─── */
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:14px;margin-top:8px}
+.kpi{background:var(--teal);color:#fff;border-radius:10px;padding:22px 18px;text-align:center}
+.kpi.coral{background:var(--coral)}
+.kpi.ciruela{background:var(--ciruela)}
+.kpi .big{font-family:'Cambria','Georgia',serif;font-size:2.3rem;font-weight:700;line-height:1}
+.kpi .lbl{font-size:.7rem;letter-spacing:.08em;text-transform:uppercase;margin-top:6px;opacity:.92}
+
+/* ─── LISTAS ─── */
+ul.lista{list-style:none;margin:8px 0 0}
+ul.lista li{position:relative;padding-left:22px;margin-bottom:9px;max-width:74ch}
+ul.lista li::before{content:"";position:absolute;left:0;top:.6em;width:7px;height:7px;background:var(--coral);border-radius:50%}
+
+/* ─── UNIDADES (acordeón) ─── */
+.unidad{background:var(--crema);border:1px solid var(--linea);border-radius:10px;margin-bottom:12px;overflow:hidden}
+.unidad-cab{width:100%;border:0;background:transparent;cursor:pointer;padding:18px 20px;display:flex;gap:14px;align-items:center;text-align:left;font-family:inherit;color:inherit}
+.unidad-num{font-family:'Cambria','Georgia',serif;font-weight:700;color:#fff;background:var(--teal);min-width:34px;height:34px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:.9rem}
+.unidad-tit{flex:1}
+.unidad-tit .u{font-size:.66rem;letter-spacing:.12em;text-transform:uppercase;color:var(--coral);font-weight:700}
+.unidad-tit h3{font-family:'Cambria','Georgia',serif;font-size:1.18rem;color:var(--tinta);line-height:1.15}
+.unidad-chv{transition:transform .25s;color:var(--gris)}
+.unidad.open .unidad-chv{transform:rotate(180deg)}
+.unidad-body{max-height:0;overflow:hidden;transition:max-height .4s ease}
+.unidad-body-in{padding:0 20px 20px;border-top:1px solid var(--linea);padding-top:14px}
+.unidad-body-in .qh{font-size:.66rem;letter-spacing:.14em;text-transform:uppercase;color:var(--gris);font-weight:700;margin:12px 0 6px}
+.unidad-body-in .qh:first-child{margin-top:0}
+.unidad-body-in p{font-size:.94rem;margin-bottom:6px}
+.sugerencia{background:var(--teal-claro);border-radius:8px;padding:12px 14px;margin-top:12px;font-size:.92rem}
+.sugerencia b{color:var(--teal)}
+
+/* ─── TABLA HERRAMIENTAS ─── */
+.tabla{width:100%;border-collapse:collapse;margin-top:8px;font-size:.92rem}
+.tabla th,.tabla td{text-align:left;padding:10px 12px;border-bottom:1px solid var(--linea)}
+.tabla th{font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;color:var(--gris);font-weight:700}
+.tabla td:first-child{font-weight:600;color:var(--tinta);white-space:nowrap}
+
+/* ─── BIBLIO ─── */
+.biblio{margin-top:8px}
+.biblio .grupo{font-size:.68rem;letter-spacing:.12em;text-transform:uppercase;color:var(--coral);font-weight:700;margin:16px 0 8px}
+.ref{padding:11px 0;border-bottom:1px solid var(--linea);font-size:.94rem}
+.ref b{color:var(--tinta)}
+.ref .tipo{display:inline-block;font-size:.64rem;letter-spacing:.08em;text-transform:uppercase;font-weight:700;color:var(--teal);background:var(--teal-claro);padding:2px 8px;border-radius:99px;margin-right:8px}
+.ref .tipo.comp{color:var(--ciruela);background:var(--ciruela-claro)}
+
+/* ─── DESTACADO / evento ─── */
+.destacado-box{background:var(--coral-claro);border:1px solid #f0d5c9;border-radius:12px;padding:26px 24px;margin-top:8px}
+.destacado-box .eyebrow{color:var(--coral)}
+.destacado-box h3{font-family:'Cambria','Georgia',serif;font-size:1.5rem;color:var(--tinta);margin-bottom:8px}
+.destacado-box p{color:var(--tinta);opacity:.85}
+
+/* ─── CTA cronograma ─── */
+.cta{background:var(--teal);color:#fff;border-radius:12px;padding:28px 24px;margin-top:8px;text-align:center}
+.cta h3{font-family:'Cambria','Georgia',serif;font-size:1.5rem;margin-bottom:6px}
+.cta p{color:#fff;opacity:.9;margin:0 auto 16px;max-width:56ch}
+.cta a{display:inline-flex;align-items:center;gap:8px;background:#fff;color:var(--teal);font-weight:700;text-decoration:none;padding:11px 22px;border-radius:8px;font-size:.92rem;transition:transform .1s}
+.cta a:hover{transform:scale(1.03)}
+
+footer{max-width:1080px;margin:52px auto 0;padding:24px;text-align:center;font-size:.74rem;letter-spacing:.03em;color:var(--gris);border-top:1px solid var(--linea)}
+footer b{color:var(--teal)}
+
+@media(prefers-reduced-motion:reduce){*{transition:none!important}html{scroll-behavior:auto}}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav">
+  <div class="nav-inner">
+    <span class="marca-nav">PP2</span>
+    <a href="#presentacion">Presentación</a>
+    <a href="#ejes">Ejes</a>
+    <a href="#trabajo">Cómo trabajamos</a>
+    <a href="#evaluacion">Evaluación</a>
+    <a href="#unidades">Unidades</a>
+    <a href="#herramientas">Herramientas</a>
+    <a href="#bibliografia">Bibliografía</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<header>
+  <div class="marca">IFTS N.º 23 · Técnico Superior en Gastronomía</div>
+  <div class="eyebrow">Eje Producción Gastronómica · Materia promocionable · 2026</div>
+  <h1>Práctica<br>Profesionalizante II</h1>
+  <div class="sub">De la receta a la gestión de la producción</div>
+  <div class="meta-linea">
+    <span>Prof. Téc. Sup. <b>Mercedes Recalde</b></span>
+    <span>2.º cuatrimestre 2026</span>
+    <span>Jueves · 8:00 a 11:20 h</span>
+  </div>
+</header>
+
+<div class="wrap">
+
+  <!-- PRESENTACIÓN -->
+  <section id="presentacion">
+    <div class="sec-eyebrow">De qué se trata</div>
+    <h2>Aprender a gestionar una cocina, no solo a cocinar</h2>
+    <p>En Práctica Profesionalizante II das un paso que define tu perfil profesional: pasás de ejecutar recetas a <b>planificar, estandarizar y organizar la producción</b> de una operación gastronómica.</p>
+    <p>Es una materia teórico-práctica. No cocinamos en ella: trabajamos sobre la cocina. Tomamos recetas reales —las que preparás en el taller de Cocina de Producción— y las convertimos en herramientas de gestión: fichas técnicas, cálculo de rendimientos y mermas, planificación de la producción y armado de brigadas. Ese es el trabajo que diferencia a un cocinero de quien conduce una cocina.</p>
+  </section>
+
+  <!-- EJES -->
+  <section id="ejes">
+    <div class="sec-eyebrow">El recorrido</div>
+    <h2>Cuatro ejes que cuentan una historia</h2>
+    <p class="sec-lead">Todo lo que hagamos este cuatrimestre se ordena en cuatro grandes ejes: entender dónde producís, estandarizar lo que producís, producir con precisión y llevarlo todo a escala real.</p>
+    <div class="ejes">
+      <div class="eje">
+        <div class="n">1</div>
+        <h3>Leer la organización</h3>
+        <p>Entender dónde y para quién producimos antes de tocar una receta.</p>
+        <span class="tag">Operaciones de A&B · modelo abierto y cerrado · mercado y comensal</span>
+      </div>
+      <div class="eje destacado">
+        <div class="n">2<span class="star">★ Eje central</span></div>
+        <h3>La ficha técnica</h3>
+        <p>La herramienta que traduce el hacer culinario en gestión de la producción.</p>
+        <span class="tag">Estandarizar · cantidades y procedimientos · misma calidad</span>
+      </div>
+      <div class="eje">
+        <div class="n">3</div>
+        <h3>Rendimientos y mermas</h3>
+        <p>Producir con precisión: cuánto insumo real necesito y cuánto se pierde.</p>
+        <span class="tag">Del insumo a la porción · control de stock e inventarios</span>
+      </div>
+      <div class="eje">
+        <div class="n">4</div>
+        <h3>Planificar la producción</h3>
+        <p>Llevar todo a escala real en el proyecto integrador de fin de año.</p>
+        <span class="tag">Fichas a mayor volumen · brigadas · organigrama y tareas</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- CÓMO TRABAJAMOS -->
+  <section id="trabajo">
+    <div class="sec-eyebrow">Cómo vamos a trabajar</div>
+    <h2>Aprender haciendo, sobre problemas reales</h2>
+    <p class="sec-lead">La cursada se apoya en el Aprendizaje Basado en Problemas y Proyectos (ABPP): no se trata de memorizar contenidos aislados, sino de saber hacer en situaciones análogas a las del ejercicio profesional.</p>
+    <div class="duo">
+      <div class="card">
+        <h3>Aprendizaje por competencias</h3>
+        <p>La evaluación no se centra en lo memorizado, sino en la capacidad de aplicarlo: resolver un problema de producción, elaborar una ficha técnica, organizar un equipo. La competencia se demuestra en el desempeño.</p>
+      </div>
+      <div class="card">
+        <h3>Aprendizaje situado</h3>
+        <p>Trabajamos sobre casos reales del sector. Las observaciones de las salidas a establecimientos gastronómicos son insumo para elaborar diagnósticos y proponer mejoras —una mirada que profundizarán en PP3.</p>
+      </div>
+    </div>
+    <h3 style="font-family:'Cambria',Georgia,serif;color:var(--teal);margin:26px 0 4px;font-size:1.15rem">No trabajamos solos</h3>
+    <ul class="lista">
+      <li><b>Con Cocina de Producción</b> (articulación horizontal): ellos aportan la ejecución de las recetas; nosotros las estandarizamos, calculamos rendimientos y mermas, y las costeamos.</li>
+      <li><b>Con Práctica Profesionalizante III</b> (articulación vertical): esta materia enseña a planificar y producir a escala; PP3 avanza hacia el diagnóstico, la gestión y el asesoramiento.</li>
+    </ul>
+  </section>
+
+  <!-- EVALUACIÓN -->
+  <section id="evaluacion">
+    <div class="sec-eyebrow">Cómo te voy a evaluar</div>
+    <h2>Evaluación continua, con métricas compartidas</h2>
+    <p class="sec-lead">La evaluación es un proceso continuo, formativo y orientado al desempeño. Cada trabajo cuenta con indicadores explícitos, conocidos de antemano.</p>
+    <div class="kpis">
+      <div class="kpi"><div class="big">80%</div><div class="lbl">Asistencia mínima</div></div>
+      <div class="kpi coral"><div class="big">7</div><div class="lbl">Nota para aprobar parciales</div></div>
+      <div class="kpi ciruela"><div class="big">100%</div><div class="lbl">Entregas con normas APA</div></div>
+    </div>
+    <div class="duo" style="margin-top:16px">
+      <div class="card">
+        <h3>La rúbrica — qué mira cada trabajo</h3>
+        <p>Describe los niveles de desempeño esperados en cada dimensión: planificación de la producción, aplicación técnica, organización del equipo, uso de herramientas digitales y calidad de la presentación. Se comparte al inicio de cada propuesta.</p>
+      </div>
+      <div class="card">
+        <h3>La lista de cotejo — lo no negociable</h3>
+        <p>Verifica aspectos observables: normas de higiene y seguridad, fichas técnicas completas, rotulación, cumplimiento de consignas, aplicación de normas APA, trabajo en equipo y respeto entre pares.</p>
+      </div>
+    </div>
+    <div class="destacado-box" style="background:var(--teal-claro);border-color:#cfe2df;margin-top:16px">
+      <div class="eyebrow" style="color:var(--teal)">La meta del cuatrimestre</div>
+      <h3 style="color:var(--tinta)">Es una materia promocionable — y el objetivo es que promociones</h3>
+      <p>Promocionar significa aprobar la materia por desempeño sostenido, sin llegar a un examen final: cumplir la asistencia, aprobar los parciales con 7, sostener las entregas con normas APA y presentar el proyecto integrador final.</p>
+    </div>
+  </section>
+
+  <!-- UNIDADES -->
+  <section id="unidades">
+    <div class="sec-eyebrow">Contenidos · Hoja de ruta</div>
+    <h2>Cómo vamos a abordar cada unidad</h2>
+    <p class="sec-lead">Qué vemos en cada unidad y cómo te sugiero encararla para aprovecharla al máximo. Tocá cada una para desplegarla.</p>
+    <div id="unidades-lista"></div>
+  </section>
+
+  <!-- EVENTO -->
+  <section id="evento">
+    <div class="destacado-box">
+      <div class="eyebrow">★ Apartado especial · El evento del año</div>
+      <h3>Evento de Colación 2026</h3>
+      <p>El proyecto integrador toma cuerpo en un evento real. Los estudiantes no solo lo planifican en el aula: colaboran en su ejecución, poniendo en juego todo lo aprendido en un entorno profesional y con público real —planificación y producción de la cocina, y colaboración en el servicio durante el evento.</p>
+    </div>
+  </section>
+
+  <!-- HERRAMIENTAS -->
+  <section id="herramientas">
+    <div class="sec-eyebrow">Recursos digitales</div>
+    <h2>Herramientas que vamos a usar</h2>
+    <p class="sec-lead">La materia integra herramientas digitales de diseño, gestión y trabajo colaborativo, en línea con el eje institucional de hibridación.</p>
+    <table class="tabla">
+      <thead><tr><th>Área</th><th>Herramienta</th></tr></thead>
+      <tbody>
+        <tr><td>Diseño de recetas y material</td><td>Canva, Genially, Google Docs</td></tr>
+        <tr><td>Investigación de contenidos</td><td>Google Scholar, Pinterest, YouTube</td></tr>
+        <tr><td>Comunicación y trabajo colaborativo</td><td>Google Drive, Classroom, Napkin</td></tr>
+        <tr><td>Aula virtual y gestión del cursado</td><td>Moodle (plataforma institucional)</td></tr>
+        <tr><td>Evaluación y retroalimentación</td><td>Socrative, Google Forms</td></tr>
+        <tr><td>Organización y planificación</td><td>Trello, Notion</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- BIBLIOGRAFÍA -->
+  <section id="bibliografia">
+    <div class="sec-eyebrow">Fuentes de la cátedra</div>
+    <h2>Bibliografía</h2>
+    <div class="biblio">
+      <div class="grupo">Obligatoria</div>
+      <div class="ref"><span class="tipo">Libro</span><b>Sebess, P.</b> (2007). <em>El Restaurante. Guía práctica para proyectar y administrar locales de comidas.</em> Mausi Sebess.</div>
+      <div class="ref"><span class="tipo">PDF</span><b>Fundación elBulli.</b> <em>Mise en place, modelo de gestión de un restaurante.</em></div>
+      <div class="ref"><span class="tipo">Documento</span><b>Corporación Municipal de Valparaíso.</b> (2007). <em>Planificación de la producción gastronómica.</em> Ministerio de Educación de Chile.</div>
+      <div class="ref"><span class="tipo">Cátedra</span><b>Gestión de alimentos y bebidas</b> — apuntes de la cátedra.</div>
+      <div class="grupo">Complementaria</div>
+      <div class="ref"><span class="tipo comp">Marketing</span><b>Kotler, P. y Armstrong, G.</b> (2018). <em>Principios de marketing</em> (17.ª ed.). Pearson.</div>
+      <div class="ref"><span class="tipo comp">Marketing</span><b>Braidot, N.</b> (2010). <em>Neuromarketing: cómo llegar a la mente del mercado.</em> Granica.</div>
+      <div class="ref"><span class="tipo comp">Ciencia</span><b>McGee, H.</b> (2007). <em>La cocina y los alimentos.</em> Debate.</div>
+      <div class="ref"><span class="tipo comp">Cocina</span><b>Myhrvold, N. y Bilet, M.</b> (2012). <em>Modernist Cuisine at Home.</em> Taschen.</div>
+      <div class="ref"><span class="tipo comp">Referencia</span><b>Montagné, P.</b> <em>Larousse Gastronomique.</em></div>
+    </div>
+  </section>
+
+  <!-- CTA CRONOGRAMA -->
+  <section id="cronograma-cta">
+    <div class="cta">
+      <h3>¿Querés ver el recorrido clase a clase?</h3>
+      <p>El cronograma interactivo tiene las 16 clases con sus temas, las salidas y las instancias de evaluación.</p>
+      <a href="https://pp2-ifts23.pages.dev/" target="_blank" rel="noopener">Ver el cronograma →</a>
+    </div>
+  </section>
+
+</div>
+
+<footer>
+  <b>Práctica Profesionalizante II</b> · Técnico Superior en Gastronomía · IFTS N.º 23 · Prof. Téc. Sup. Mercedes Recalde · 2026<br>
+  Programa sujeto a modificaciones · Diseño curricular Res. N.º 46/SSGECP/2015
+</footer>
+
+<script>
+const UNIDADES = [
+  {
+    u:"Unidad I", t:"Las organizaciones gastronómicas",
+    vemos:"Presentación de la materia y del proyecto integrador. Tipos de operaciones de alimentos y bebidas. Modelo abierto y cerrado, y sus diferencias. Generalidades del mercadeo y orientación de las empresas. Herramientas digitales aplicadas (Canva).",
+    abordar:"Mirá el sector con ojos de gestión. Aprovechá esta unidad para empezar a observar los lugares donde comés o trabajás: ¿son modelo abierto o cerrado? ¿A qué comensal apuntan? Entrenar esa mirada desde el arranque es lo que después te permite entender por qué cada cocina produce como produce."
+  },
+  {
+    u:"Unidad II", t:"Mercado, almacenes y control",
+    vemos:"Investigación y segmentación de mercados. Comportamiento del consumidor y posicionamiento. Almacenes: organización, recepción y salida de mercaderías, cierre y reportes, instalaciones y tipos de almacenamiento. Sistemas digitales de control de stock.",
+    abordar:"Conectá el mercado con la cocina. No pienses el almacén como un depósito aislado: es el corazón del control de la producción. Prestá atención a cómo la organización de la mercadería impacta en lo que después vas a poder producir y en cuánto se pierde por el camino."
+  },
+  {
+    u:"Unidad III", t:"Integración y fichas técnicas",
+    vemos:"Integración de los conceptos mediante ejercitaciones grupales. Análisis de casos y microcasos. Debate y discusión. Elaboración de fichas técnicas para llevar a la práctica.",
+    abordar:"Acá empieza el corazón de la materia. La ficha técnica es la herramienta que más vas a usar. Tomate en serio cada práctica: traé recetas de Cocina de Producción y convertilas en fichas. Cuanto más practiques ahora, más natural te va a salir cuando escalemos al proyecto final."
+  },
+  {
+    u:"Unidad IV", t:"Inventarios, rendimientos y mermas",
+    vemos:"Inventarios y control de stock. Tamaño óptimo de pedido, inventario promedio, punto de renovación de pedidos y existencias de seguridad. Costos de inventarios. Ejercitación de rendimientos y mermas.",
+    abordar:"Es pura precisión productiva. Rendimientos y mermas responden una pregunta clave: ¿cuánto insumo real necesito para producir lo que tengo que producir? Practicá con números concretos sobre tus propias fichas; entender la merma es entender por qué un plato cuesta lo que cuesta y cómo no quedarte corto de mercadería."
+  },
+  {
+    u:"Unidad V", t:"Servicio y proyecto integrador",
+    vemos:"Servicio: concepto y tipos. Planificación de la producción y análisis de la producción en serie. Visitas a establecimientos gastronómicos. Trabajo práctico integrador: planificación, fichas técnicas y costeo de la producción del Evento de Colación 2026, con su defensa.",
+    abordar:"Es la síntesis de todo. Acá juntás las cuatro unidades anteriores en un solo trabajo real: planificás, escalás las fichas, calculás rendimientos y organizás las brigadas para el evento de colación. El integrador no se improvisa, se construye sobre todo lo anterior. Es tu carta de promoción."
+  }
+];
+
+const svgChv = '<svg class="unidad-chv" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M6 9l6 6 6-6"/></svg>';
+function esc(s){return String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));}
+
+const cont = document.getElementById('unidades-lista');
+UNIDADES.forEach((u,i)=>{
+  const el = document.createElement('div');
+  el.className = 'unidad';
+  el.innerHTML = `
+    <button class="unidad-cab" aria-expanded="false">
+      <span class="unidad-num">${i+1}</span>
+      <span class="unidad-tit"><span class="u">${esc(u.u)}</span><h3>${esc(u.t)}</h3></span>
+      ${svgChv}
+    </button>
+    <div class="unidad-body"><div class="unidad-body-in">
+      <div class="qh">Qué vemos</div>
+      <p>${esc(u.vemos)}</p>
+      <div class="sugerencia"><b>Cómo te sugiero abordarla · </b>${esc(u.abordar)}</div>
+    </div></div>`;
+  cont.appendChild(el);
+  const cab = el.querySelector('.unidad-cab');
+  const body = el.querySelector('.unidad-body');
+  cab.addEventListener('click',()=>{
+    const open = el.classList.toggle('open');
+    cab.setAttribute('aria-expanded', open);
+    body.style.maxHeight = open ? body.scrollHeight+'px' : '0';
+  });
+});
+</script>
+</body>
+</html>
