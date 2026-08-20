@@ -320,6 +320,15 @@ CLASES.forEach((c,i)=>{
 
   const acc = [];
   if(c.mapa) acc.push(`<a class="btn btn-full" href="${esc(c.mapa)}" target="_blank" rel="noopener">${icMapa}Cómo llegar</a>`);
+   if(c.materiales){
+    c.materiales.forEach(m => {
+      if(m.url){
+        acc.push(`<a class="btn ${c.tipo==='salida'?'btn-line':'btn-full'}" href="${esc(m.url)}" target="_blank" rel="noopener">${icLink}${esc(m.texto)}</a>`);
+      } else if(m.texto){
+        acc.push(`<span class="btn btn-off">${icLink}${esc(m.texto)} · próximamente</span>`);
+      }
+    });
+  }
   if(c.actividad && c.actividad.url) acc.push(`<a class="btn ${c.tipo==='salida'?'btn-line':'btn-full'}" href="${esc(c.actividad.url)}" target="_blank" rel="noopener">${icLink}${esc(c.actividad.texto||'Actividad')}</a>`);
   else if(c.actividad && c.actividad.texto) acc.push(`<span class="btn btn-off">${icLink}${esc(c.actividad.texto)} · próximamente</span>`);
   if(acc.length) cuerpo += `<div class="acciones">${acc.join('')}</div>`;
