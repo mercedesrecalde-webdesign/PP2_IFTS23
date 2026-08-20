@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="es-AR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cuestionario de metacognición · Práctica Profesionalizante II</title>
+<style>
+:root{
+  --tinta:#1f3a3d;
+  --teal:#2a7d78;
+  --teal-claro:#e6f0ef;
+  --coral:#e07a5f;
+  --coral-claro:#fbeae4;
+  --papel:#ffffff;
+  --crema:#f7f5f1;
+  --ciruela:#8a5a7a;
+  --ciruela-claro:#f2e9ef;
+  --linea:#e3ddd3;
+  --gris:#6b7b7a;
+  --verde:#4c8b6f;
+  --verde-claro:#e4f0ea;
+  --rojo:#c0563f;
+  --rojo-claro:#f7e2dc;
+  --sombra:rgba(31,58,61,.10);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{
+  font-family:'Calibri','Segoe UI',-apple-system,'Helvetica Neue',Arial,sans-serif;
+  background:var(--papel);color:var(--tinta);line-height:1.55;
+  -webkit-font-smoothing:antialiased;padding:0 0 64px;
+}
+header{padding:46px 24px 30px;max-width:820px;margin:0 auto;text-align:center}
+.marca{font-size:.72rem;letter-spacing:.22em;text-transform:uppercase;color:var(--teal);font-weight:700;margin-bottom:16px}
+.eyebrow{display:inline-block;font-size:.7rem;letter-spacing:.28em;text-transform:uppercase;color:var(--coral);font-weight:700;margin-bottom:14px}
+h1{font-family:'Cambria','Georgia',serif;font-size:clamp(2.1rem,5.2vw,3rem);font-weight:700;letter-spacing:-.01em;line-height:1.04;margin-bottom:12px;color:var(--tinta)}
+.sub{font-size:1.05rem;color:var(--teal);font-weight:600}
+.sub em{color:var(--gris);font-weight:400;font-style:italic}
+.meta-linea{margin-top:18px;font-size:.8rem;letter-spacing:.04em;color:var(--gris);display:flex;gap:8px 22px;justify-content:center;flex-wrap:wrap}
+.meta-linea b{color:var(--teal);font-weight:600}
+.wrap{max-width:820px;margin:0 auto;padding:0 24px}
+.intro{background:var(--teal-claro);border:1px solid #cfe3e0;border-radius:10px;padding:22px 24px;margin-top:14px}
+.intro h2{font-family:'Cambria','Georgia',serif;font-size:1.2rem;color:var(--teal);margin-bottom:8px}
+.intro p{font-size:.95rem;margin-bottom:8px}
+.intro p:last-child{margin-bottom:0}
+.intro .como{font-size:.86rem;color:var(--gris)}
+.intro .como b{color:var(--teal)}
+.identif{background:var(--coral-claro);border:1px solid #f0d5c9;border-radius:10px;padding:20px 24px;margin-top:16px}
+.identif label{display:block;font-size:.9rem;font-weight:700;color:var(--tinta);margin-bottom:8px}
+.identif label .oblig{color:var(--coral);font-weight:700}
+.identif input{width:100%;padding:12px 14px;border:1.5px solid #e6bfb2;border-radius:8px;font-family:inherit;font-size:1rem;color:var(--tinta);background:var(--papel)}
+.identif input:focus{outline:none;border-color:var(--coral)}
+.identif input.error{border-color:var(--rojo);background:var(--rojo-claro)}
+.identif .aviso-error{display:none;font-size:.82rem;color:var(--rojo);font-weight:600;margin-top:6px}
+.identif .aviso-error.visible{display:block}
+.momento{margin-top:34px;scroll-margin-top:20px}
+.momento-cab{display:flex;align-items:center;gap:14px;margin-bottom:6px}
+.momento-ico{width:44px;height:44px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:1.3rem;color:#fff;background:var(--teal)}
+.m-durante .momento-ico{background:var(--coral)}
+.m-despues .momento-ico{background:var(--ciruela)}
+.momento-tit{font-family:'Cambria','Georgia',serif;font-size:1.5rem;font-weight:700;color:var(--tinta);line-height:1.1}
+.momento-fase{font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;font-weight:700;color:var(--teal)}
+.m-durante .momento-fase{color:var(--coral)}
+.m-despues .momento-fase{color:var(--ciruela)}
+.momento-desc{font-size:.92rem;color:var(--gris);margin:12px 0 20px;padding-left:58px}
+@media(max-width:520px){.momento-desc{padding-left:0}}
+.escala-intro{font-size:.82rem;color:var(--gris);background:var(--crema);border:1px solid var(--linea);border-radius:8px;padding:10px 14px;margin-bottom:16px;display:flex;gap:6px 16px;flex-wrap:wrap;justify-content:center}
+.escala-intro b{color:var(--tinta)}
+.item{background:var(--crema);border:1px solid var(--linea);border-radius:10px;padding:18px 20px;margin-bottom:12px}
+.m-durante .item{background:#fdf4f1}
+.m-despues .item{background:#f9f3f7}
+.item-txt{font-size:.98rem;font-weight:600;margin-bottom:14px;line-height:1.4}
+.likert{display:flex;gap:6px}
+.likert label{flex:1;cursor:pointer}
+.likert input{display:none}
+.likert span{display:block;text-align:center;padding:10px 4px;border:1.5px solid var(--linea);border-radius:7px;background:var(--papel);font-size:.78rem;font-weight:600;color:var(--gris);transition:all .15s;line-height:1.25;min-height:52px;display:flex;flex-direction:column;justify-content:center;gap:2px}
+.likert span .n{font-size:1rem;font-weight:700;color:var(--tinta)}
+.likert label:hover span{border-color:var(--teal)}
+.likert input:checked + span{background:var(--teal);border-color:var(--teal);color:#fff}
+.likert input:checked + span .n{color:#fff}
+.m-durante .likert input:checked + span{background:var(--coral);border-color:var(--coral)}
+.m-despues .likert input:checked + span{background:var(--ciruela);border-color:var(--ciruela)}
+@media(max-width:520px){
+  .likert{flex-wrap:wrap}
+  .likert label{flex:1 1 30%}
+  .likert span{font-size:.72rem;min-height:auto;padding:8px 3px}
+}
+.abierta{background:var(--papel);border:1.5px solid var(--linea);border-left:3px solid var(--teal);border-radius:8px;padding:18px 20px;margin-bottom:12px}
+.m-durante .abierta{border-left-color:var(--coral)}
+.m-despues .abierta{border-left-color:var(--ciruela)}
+.abierta label{display:block;font-size:.96rem;font-weight:600;margin-bottom:10px;line-height:1.4}
+textarea{width:100%;min-height:90px;padding:12px 14px;border:1.5px solid var(--linea);border-radius:8px;font-family:inherit;font-size:.95rem;line-height:1.5;color:var(--tinta);background:var(--papel);resize:vertical}
+textarea:focus{outline:none;border-color:var(--teal)}
+.cierre{background:var(--teal-claro);border:1px solid #cfe3e0;border-radius:10px;padding:22px 24px;margin-top:34px}
+.cierre-tit{font-family:'Cambria','Georgia',serif;font-size:1.15rem;font-weight:700;color:var(--teal);margin-bottom:6px}
+.cierre-desc{font-size:.9rem;color:var(--gris)}
+.acciones-fin{display:flex;gap:12px;flex-wrap:wrap;justify-content:center;margin-top:24px}
+.btn{font-size:.9rem;font-weight:700;text-decoration:none;padding:12px 22px;border-radius:8px;display:inline-flex;align-items:center;gap:8px;cursor:pointer;border:0;transition:opacity .15s,transform .1s;font-family:inherit}
+.btn:hover{opacity:.9}
+.btn:active{transform:scale(.98)}
+.btn:disabled{opacity:.55;cursor:default}
+.btn-coral{background:var(--coral);color:#fff}
+.btn-teal{background:var(--teal);color:#fff}
+.btn-line{background:transparent;color:var(--tinta);border:1.5px solid var(--linea)}
+.estado{display:none;margin-top:20px;padding:16px 20px;border-radius:10px;font-size:.95rem;font-weight:600;text-align:center}
+.estado.visible{display:block}
+.estado.enviando{background:var(--teal-claro);color:var(--teal)}
+.estado.ok{background:var(--verde-claro);color:var(--verde);border:1px solid #bfe0ce}
+.estado.error{background:var(--rojo-claro);color:var(--rojo);border:1px solid #e6bfb2}
+.gracias{display:none;text-align:center;padding:50px 24px}
+.gracias.visible{display:block}
+.gracias .check{width:72px;height:72px;border-radius:50%;background:var(--verde);color:#fff;font-size:2.2rem;display:flex;align-items:center;justify-content:center;margin:0 auto 20px}
+.gracias h2{font-family:'Cambria','Georgia',serif;font-size:1.9rem;color:var(--tinta);margin-bottom:12px}
+.gracias p{font-size:1rem;color:var(--gris);max-width:520px;margin:0 auto 8px}
+footer{max-width:820px;margin:48px auto 0;padding:0 24px;text-align:center;font-size:.74rem;letter-spacing:.03em;color:var(--gris)}
+footer b{color:var(--teal)}
+@media(prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="marca">IFTS N.º 23 · Técnico Superior en Gastronomía</div>
+  <div class="eyebrow">Práctica Profesionalizante II · 2026</div>
+  <h1>¿Cómo aprendo?</h1>
+  <div class="sub">Cuestionario de metacognición <em>· pensar sobre mi propio aprendizaje</em></div>
+  <div class="meta-linea">
+    <span>Antes · Durante · Después</span>
+    <span>No lleva nota</span>
+    <span>5–10 minutos</span>
+  </div>
+</header>
+
+<div class="wrap" id="formulario">
+
+  <div class="intro">
+    <h2>De qué se trata</h2>
+    <p>Este cuestionario no evalúa lo que sabés de la materia, sino <b>cómo lo aprendés</b>. La metacognición es la capacidad de mirar tu propio proceso: darte cuenta de cómo estudiás, cuándo entendés de verdad, qué estrategias te funcionan y cuáles no. Entrenarla es una de las herramientas más potentes para mejorar.</p>
+    <p class="como">No hay respuestas correctas ni incorrectas, y no lleva nota. Está organizado en tres momentos: <b>antes</b> de aprender (cómo me preparo), <b>durante</b> (cómo me doy cuenta si voy entendiendo) y <b>después</b> (cómo evalúo lo que logré). Respondé con honestidad: es una conversación con vos mismo/a, y le sirve a la docente para acompañarte mejor.</p>
+  </div>
+
+  <div class="identif">
+    <label for="nombre">Nombre y apellido <span class="oblig">*</span></label>
+    <input type="text" id="nombre" placeholder="Escribí tu nombre y apellido" autocomplete="name">
+    <div class="aviso-error" id="errorNombre">Necesitamos tu nombre para poder registrar tu respuesta.</div>
+  </div>
+
+  <div class="momento m-antes">
+    <div class="momento-cab">
+      <div class="momento-ico">&#9680;</div>
+      <div>
+        <div class="momento-fase">Momento 1 · Planificación</div>
+        <div class="momento-tit">Antes de aprender</div>
+      </div>
+    </div>
+    <p class="momento-desc">Cómo encaro una clase, un tema nuevo o un trabajo práctico antes de meterme de lleno.</p>
+    <div class="escala-intro">
+      <span><b>1</b> Nunca</span><span><b>2</b> Casi nunca</span><span><b>3</b> A veces</span><span><b>4</b> Casi siempre</span><span><b>5</b> Siempre</span>
+    </div>
+    <div id="antes-likert"></div>
+    <div class="abierta">
+      <label>Antes de empezar un tema o trabajo nuevo, ¿qué es lo primero que hago para organizarme?</label>
+      <textarea id="a-ab1" placeholder="Escribí acá…"></textarea>
+    </div>
+  </div>
+
+  <div class="momento m-durante">
+    <div class="momento-cab">
+      <div class="momento-ico">&#9681;</div>
+      <div>
+        <div class="momento-fase">Momento 2 · Monitoreo</div>
+        <div class="momento-tit">Durante el aprendizaje</div>
+      </div>
+    </div>
+    <p class="momento-desc">Cómo me doy cuenta, mientras estudio o trabajo, de si estoy entendiendo o me estoy perdiendo.</p>
+    <div class="escala-intro">
+      <span><b>1</b> Nunca</span><span><b>2</b> Casi nunca</span><span><b>3</b> A veces</span><span><b>4</b> Casi siempre</span><span><b>5</b> Siempre</span>
+    </div>
+    <div id="durante-likert"></div>
+    <div class="abierta">
+      <label>Cuando me trabo con algo que no entiendo, ¿qué hago para destrabarme?</label>
+      <textarea id="d-ab1" placeholder="Escribí acá…"></textarea>
+    </div>
+    <div class="abierta">
+      <label>¿Cómo me doy cuenta de que entendí algo “de verdad” y no solo de memoria?</label>
+      <textarea id="d-ab2" placeholder="Escribí acá…"></textarea>
+    </div>
+  </div>
+
+  <div class="momento m-despues">
+    <div class="momento-cab">
+      <div class="momento-ico">&#9679;</div>
+      <div>
+        <div class="momento-fase">Momento 3 · Evaluación</div>
+        <div class="momento-tit">Después de aprender</div>
+      </div>
+    </div>
+    <p class="momento-desc">Cómo reviso lo que hice, qué aprendo de mis errores y qué me llevo para la próxima.</p>
+    <div class="escala-intro">
+      <span><b>1</b> Nunca</span><span><b>2</b> Casi nunca</span><span><b>3</b> A veces</span><span><b>4</b> Casi siempre</span><span><b>5</b> Siempre</span>
+    </div>
+    <div id="despues-likert"></div>
+    <div class="abierta">
+      <label>Cuando me devuelven un trabajo corregido, ¿qué hago con esa devolución?</label>
+      <textarea id="e-ab1" placeholder="Escribí acá…"></textarea>
+    </div>
+    <div class="abierta">
+      <label>Pensando en toda la materia: ¿qué estrategia de estudio me está funcionando mejor y cuál me gustaría cambiar?</label>
+      <textarea id="e-ab2" placeholder="Escribí acá…"></textarea>
+    </div>
+    <div class="abierta">
+      <label>Una meta concreta que me propongo para lo que queda de la cursada</label>
+      <textarea id="e-ab3" placeholder="Escribí acá…"></textarea>
+    </div>
+  </div>
+
+  <div class="cierre">
+    <div class="cierre-tit">Enviar mi cuestionario</div>
+    <div class="cierre-desc">Al enviar, tus respuestas le llegan a la profe. Revisá que tu nombre esté completo arriba.</div>
+  </div>
+
+  <div class="acciones-fin">
+    <button class="btn btn-teal" id="btnEnviar" onclick="enviar()">Enviar cuestionario</button>
+    <button class="btn btn-line" onclick="descargarLocal()">⬇ Descargar una copia</button>
+  </div>
+
+  <div class="estado" id="estado"></div>
+
+</div>
+
+<div class="wrap">
+  <div class="gracias" id="gracias">
+    <div class="check">&#10003;</div>
+    <h2>¡Gracias por tu reflexión!</h2>
+    <p>Tu cuestionario se registró correctamente. Pensar sobre cómo aprendés es un paso enorme para aprender mejor.</p>
+    <p>Nos vemos en clase.</p>
+    <div class="acciones-fin">
+      <button class="btn btn-line" onclick="descargarLocal()">⬇ Descargar una copia para mí</button>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <b>Prof. Téc. Sup. Mercedes Recalde</b> · Práctica Profesionalizante II · 2026 · IFTS N.º 23<br>
+  Cuestionario de metacognición · pensar sobre el propio aprendizaje
+</footer>
+
+<script>
+const SUPABASE_URL = 'https://bypjrmgemgboivfbnxgi.supabase.co';
+const SUPABASE_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJ5cGpybWdlbWdib2l2ZmJueGdpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Njc4Mjg0MzAsImV4cCI6MjA4MzQwNDQzMH0.EuzWicGSNSMbzIPwoQW1iSMc8BLhmdQPOZoNhf7bW1U';
+const TABLA = 'metacognicion_pp2';
+
+const items = {
+  antes: [
+    "Antes de estudiar un tema, me fijo qué objetivo tiene y qué se espera que aprenda.",
+    "Reviso la rúbrica o las consignas antes de empezar un trabajo práctico.",
+    "Calculo cuánto tiempo me va a llevar y organizo cuándo lo voy a hacer.",
+    "Conecto el tema nuevo con algo que ya sé o que vi en otra materia (por ejemplo, Cocina de Producción)."
+  ],
+  durante: [
+    "Mientras estudio, me doy cuenta cuando algo no me está quedando claro.",
+    "Me hago preguntas a mí mismo/a para chequear si voy entendiendo.",
+    "Si una estrategia no me funciona (releer, subrayar), pruebo con otra.",
+    "Puedo explicar el tema con mis propias palabras, sin copiar del apunte.",
+    "Cuando trabajo en grupo, aprovecho lo que no entiendo para preguntar a mis compañeros/as."
+  ],
+  despues: [
+    "Cuando termino un trabajo, lo reviso con la rúbrica antes de entregarlo.",
+    "Analizo mis errores para entender por qué me equivoqué, no solo qué estuvo mal.",
+    "Identifico qué temas domino y cuáles necesito reforzar.",
+    "Uso lo que aprendí de un trabajo para mejorar el siguiente.",
+    "Reconozco cuánto de mi resultado depende de cómo me organicé y estudié."
+  ]
+};
+const labelsEscala = ['', 'Nunca', 'Casi nunca', 'A veces', 'Casi siempre', 'Siempre'];
+
+function renderLikert(fase){
+  const cont = document.getElementById(fase + '-likert');
+  items[fase].forEach((texto, i) => {
+    const div = document.createElement('div');
+    div.className = 'item';
+    let opciones = '';
+    for(let n=1; n<=5; n++){
+      opciones += '<label><input type="radio" name="' + fase + '-' + i + '" value="' + n + '"><span><span class="n">' + n + '</span>' + labelsEscala[n] + '</span></label>';
+    }
+    div.innerHTML = '<div class="item-txt">' + texto + '</div><div class="likert">' + opciones + '</div>';
+    cont.appendChild(div);
+  });
+}
+renderLikert('antes');
+renderLikert('durante');
+renderLikert('despues');
+
+function promedio(fase){
+  let suma = 0, n = 0;
+  items[fase].forEach((_, i) => {
+    const sel = document.querySelector('input[name="' + fase + '-' + i + '"]:checked');
+    if(sel){ suma += parseInt(sel.value); n++; }
+  });
+  return n ? +(suma / n).toFixed(2) : null;
+}
+function val(id){ return document.getElementById(id).value.trim(); }
+
+function armarDetalle(){
+  const detalle = { escalas: {}, abiertas: {} };
+  ['antes','durante','despues'].forEach(fase => {
+    detalle.escalas[fase] = items[fase].map((texto, i) => {
+      const sel = document.querySelector('input[name="' + fase + '-' + i + '"]:checked');
+      return { item: texto, valor: sel ? parseInt(sel.value) : null };
+    });
+  });
+  detalle.abiertas = {
+    antes_organizarme: val('a-ab1'),
+    durante_destrabarme: val('d-ab1'),
+    durante_entender_de_verdad: val('d-ab2'),
+    despues_devoluciones: val('e-ab1'),
+    despues_estrategias: val('e-ab2'),
+    despues_meta: val('e-ab3')
+  };
+  return detalle;
+}
+
+async function enviar(){
+  const nombreInput = document.getElementById('nombre');
+  const nombre = nombreInput.value.trim();
+  const errorNombre = document.getElementById('errorNombre');
+
+  if(nombre.length < 3){
+    nombreInput.classList.add('error');
+    errorNombre.classList.add('visible');
+    nombreInput.scrollIntoView({behavior:'smooth', block:'center'});
+    nombreInput.focus();
+    return;
+  }
+  nombreInput.classList.remove('error');
+  errorNombre.classList.remove('visible');
+
+  const btn = document.getElementById('btnEnviar');
+  const estado = document.getElementById('estado');
+  btn.disabled = true;
+  estado.className = 'estado visible enviando';
+  estado.textContent = 'Enviando tu cuestionario…';
+
+  const fila = {
+    nombre: nombre,
+    prom_antes: promedio('antes'),
+    prom_durante: promedio('durante'),
+    prom_despues: promedio('despues'),
+    detalle: armarDetalle()
+  };
+
+  try{
+    const resp = await fetch(SUPABASE_URL + '/rest/v1/' + TABLA, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'apikey': SUPABASE_ANON,
+        'Authorization': 'Bearer ' + SUPABASE_ANON,
+        'Prefer': 'return=minimal'
+      },
+      body: JSON.stringify(fila)
+    });
+
+    if(resp.ok){
+      document.getElementById('formulario').style.display = 'none';
+      document.getElementById('gracias').classList.add('visible');
+      document.getElementById('gracias').scrollIntoView({behavior:'smooth', block:'center'});
+    } else {
+      const detalle = await resp.text();
+      throw new Error('HTTP ' + resp.status + ' · ' + detalle);
+    }
+  } catch(err){
+    estado.className = 'estado visible error';
+    estado.innerHTML = 'No se pudo enviar. Revisá tu conexión y probá de nuevo.<br>Si el problema sigue, descargá una copia con el botón de abajo y avisale a la profe.<br><small style="opacity:.7">' + err.message + '</small>';
+    btn.disabled = false;
+  }
+}
+
+function descargarLocal(){
+  const nombre = document.getElementById('nombre').value.trim() || 'estudiante';
+  const fecha = new Date().toLocaleDateString('es-AR');
+  let txt = '';
+  txt += 'CUESTIONARIO DE METACOGNICIÓN · ¿CÓMO APRENDO?\n';
+  txt += 'Práctica Profesionalizante II · IFTS N.º 23 · 2026\n';
+  txt += '════════════════════════════════════════════════════════\n\n';
+  txt += 'Estudiante: ' + nombre + '\n';
+  txt += 'Fecha: ' + fecha + '\n\n';
+  const titulos = {
+    antes: 'MOMENTO 1 · ANTES DE APRENDER (planificación)',
+    durante: 'MOMENTO 2 · DURANTE EL APRENDIZAJE (monitoreo)',
+    despues: 'MOMENTO 3 · DESPUÉS DE APRENDER (evaluación)'
+  };
+  ['antes','durante','despues'].forEach(fase => {
+    txt += '── ' + titulos[fase] + ' ──\n';
+    const p = promedio(fase);
+    txt += '(promedio: ' + (p !== null ? p : 'sin completar') + ')\n\n';
+    items[fase].forEach((texto, i) => {
+      const sel = document.querySelector('input[name="' + fase + '-' + i + '"]:checked');
+      const v = sel ? sel.value + ' (' + labelsEscala[sel.value] + ')' : '(sin responder)';
+      txt += '• ' + texto + '\n  → ' + v + '\n\n';
+    });
+  });
+  txt += '── RESPUESTAS ABIERTAS ──\n\n';
+  const ab = [
+    ['Antes: cómo me organizo ante un tema nuevo', 'a-ab1'],
+    ['Durante: qué hago cuando me trabo', 'd-ab1'],
+    ['Durante: cómo sé que entendí de verdad', 'd-ab2'],
+    ['Después: qué hago con las devoluciones', 'e-ab1'],
+    ['Después: qué estrategia me funciona / quiero cambiar', 'e-ab2'],
+    ['Después: mi meta para lo que queda de la cursada', 'e-ab3']
+  ];
+  ab.forEach(function(par){
+    txt += par[0] + ':\n' + (val(par[1]) || '(sin respuesta)') + '\n\n';
+  });
+  const blob = new Blob([txt], {type:'text/plain;charset=utf-8'});
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'Metacognicion_PP2_' + nombre.replace(/\s+/g,'_') + '.txt';
+  a.click();
+  URL.revokeObjectURL(a.href);
+}
+</script>
+
+</body>
+</html>
